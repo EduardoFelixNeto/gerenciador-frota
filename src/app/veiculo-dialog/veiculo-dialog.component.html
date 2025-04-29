@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>{{ data ? 'Editar Veículo' : 'Novo Veículo' }}</h2>
+
+<form [formGroup]="veiculoForm" (ngSubmit)="salvar()">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Placa</mat-label>
+    <input matInput formControlName="placa" required>
+    <mat-error *ngIf="veiculoForm.get('placa')?.hasError('required')">Placa é obrigatória</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Modelo</mat-label>
+    <input matInput formControlName="modelo" required>
+    <mat-error *ngIf="veiculoForm.get('modelo')?.hasError('required')">Modelo é obrigatório</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Tipo</mat-label>
+    <input matInput formControlName="tipo" required>
+    <mat-error *ngIf="veiculoForm.get('tipo')?.hasError('required')">Tipo é obrigatório</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Ano</mat-label>
+    <input matInput type="number" formControlName="ano" required>
+    <mat-error *ngIf="veiculoForm.get('ano')?.hasError('required')">Ano é obrigatório</mat-error>
+    <mat-error *ngIf="veiculoForm.get('ano')?.hasError('min')">Ano inválido</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Quilometragem Atual</mat-label>
+    <input matInput type="number" formControlName="quilometragemAtual" required>
+    <mat-error *ngIf="veiculoForm.get('quilometragemAtual')?.hasError('required')">Quilometragem é obrigatória</mat-error>
+    <mat-error *ngIf="veiculoForm.get('quilometragemAtual')?.hasError('min')">Quilometragem inválida</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status" required>
+      <mat-option *ngFor="let status of statusOptions" [value]="status">{{ status }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="veiculoForm.get('status')?.hasError('required')">Status é obrigatório</mat-error>
+  </mat-form-field>
+
+  <div class="button-actions">
+    <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+      <ng-container *ngIf="!loading">Salvar</ng-container>
+      <ng-container *ngIf="loading">
+        <mat-progress-spinner diameter="20" mode="indeterminate" color="accent"></mat-progress-spinner>
+      </ng-container>
+    </button>
+
+    <button mat-raised-button color="warn" type="button" (click)="cancelar()" [disabled]="loading">
+      Cancelar
+    </button>
+  </div>
+</form>

@@ -1,0 +1,19 @@
+.motorista-container {
+  padding: 20px;
+}
+
+.agendamento-card {
+  margin-bottom: 20px;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.no-agendamentos {
+  text-align: center;
+  margin-top: 50px;
+  font-weight: bold;
+}

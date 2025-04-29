@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Detalhes da Viagem</h2>
+
+<mat-dialog-content>
+  <p><strong>Destino:</strong> {{ agendamento.destino }}</p>
+  <p><strong>Data de Saída:</strong> {{ agendamento.dataInicio | date:'dd/MM/yyyy HH:mm' }}</p>
+  <p><strong>Status:</strong> {{ agendamento.status }}</p>
+  <p><strong>Motorista:</strong> {{ agendamento.motoristaId }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="fechar()">Fechar</button>
+</mat-dialog-actions>

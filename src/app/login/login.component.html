@@ -1,0 +1,41 @@
+<div class="login-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>E-mail</mat-label>
+          <input matInput type="email" formControlName="email" required>
+          <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+            Informe um e-mail válido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Senha</mat-label>
+          <input matInput type="password" formControlName="senha" required>
+          <mat-error *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched">
+            A senha é obrigatória.
+          </mat-error>
+        </mat-form-field>
+
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+            <ng-container *ngIf="!loading">
+              <span class="entrar-text">Entrar</span>
+            </ng-container>
+            <ng-container *ngIf="loading">
+              <mat-progress-spinner
+                diameter="24"
+                mode="indeterminate"
+                color="accent">
+              </mat-progress-spinner>
+            </ng-container>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,15 @@
+.agendamento-container {
+  padding: 20px;
+}
+
+.toolbar {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filtro-input {
+  width: 300px;
+  margin-right: 10px;
+}

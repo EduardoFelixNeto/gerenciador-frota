@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{ data ? 'Editar Agendamento' : 'Novo Agendamento' }}</h2>
+
+<form [formGroup]="agendamentoForm" (ngSubmit)="salvar()">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Motorista</mat-label>
+    <mat-select formControlName="motorista" required>
+      <mat-option *ngFor="let motorista of motoristasMock" [value]="motorista">{{ motorista }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="agendamentoForm.get('motorista')?.hasError('required')">Motorista é obrigatório</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Destino</mat-label>
+    <input matInput formControlName="destino" required>
+    <mat-error *ngIf="agendamentoForm.get('destino')?.hasError('required')">Destino é obrigatório</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Data e Hora de Saída</mat-label>
+    <input matInput type="datetime-local" formControlName="dataInicio" required>
+    <mat-error *ngIf="agendamentoForm.get('dataInicio')?.hasError('required')">Data é obrigatória</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status" required>
+      <mat-option *ngFor="let status of statusOptions" [value]="status">{{ status }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="agendamentoForm.get('status')?.hasError('required')">Status é obrigatório</mat-error>
+  </mat-form-field>
+
+  <div class="button-actions">
+    <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+      <ng-container *ngIf="!loading">Salvar</ng-container>
+      <ng-container *ngIf="loading">
+        <mat-progress-spinner diameter="20" mode="indeterminate" color="accent"></mat-progress-spinner>
+      </ng-container>
+    </button>
+
+    <button mat-raised-button color="warn" type="button" (click)="cancelar()" [disabled]="loading">
+      Cancelar
+    </button>
+  </div>
+</form>

@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>{{ data ? 'Editar Motorista' : 'Novo Motorista' }}</h2>
+
+<form [formGroup]="motoristaForm" (ngSubmit)="salvar()">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nome</mat-label>
+    <input matInput formControlName="nome" required>
+    <mat-error *ngIf="motoristaForm.get('nome')?.hasError('required')">Nome é obrigatório</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>CPF</mat-label>
+    <input matInput formControlName="cpf" required>
+    <mat-error *ngIf="motoristaForm.get('cpf')?.hasError('required')">CPF é obrigatório</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>CNH</mat-label>
+    <input matInput formControlName="cnh" required>
+    <mat-error *ngIf="motoristaForm.get('cnh')?.hasError('required')">CNH é obrigatória</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Validade CNH</mat-label>
+    <input matInput type="date" formControlName="validadeCnh" required>
+    <mat-error *ngIf="motoristaForm.get('validadeCnh')?.hasError('required')">Validade da CNH é obrigatória</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Telefone</mat-label>
+    <input matInput formControlName="telefone" required>
+    <mat-error *ngIf="motoristaForm.get('telefone')?.hasError('required')">Telefone é obrigatório</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Endereço</mat-label>
+    <input matInput formControlName="endereco" required>
+    <mat-error *ngIf="motoristaForm.get('endereco')?.hasError('required')">Endereço é obrigatório</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" formControlName="email" required>
+    <mat-error *ngIf="motoristaForm.get('email')?.hasError('required')">Email é obrigatório</mat-error>
+    <mat-error *ngIf="motoristaForm.get('email')?.hasError('email')">Email inválido</mat-error>
+  </mat-form-field>
+
+  <div class="button-actions">
+    <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+      <ng-container *ngIf="!loading">Salvar</ng-container>
+      <ng-container *ngIf="loading">
+        <mat-progress-spinner diameter="20" mode="indeterminate" color="accent"></mat-progress-spinner>
+      </ng-container>
+    </button>
+
+    <button mat-raised-button color="warn" type="button" (click)="cancelar()" [disabled]="loading">
+      Cancelar
+    </button>
+  </div>
+</form>
