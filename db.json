@@ -323,5 +323,19 @@
       "descricao": "Alinhamento e balanceamento",
       "valor": 300
     }
+  ],
+  "ocorrencias": [
+    {
+      "id": "3",
+      "veiculoId": 4,
+      "motoristaId": 2,
+      "descricao": "Quebra de vidro lateral"
+    },
+    {
+      "id": "c390",
+      "motoristaId": 4,
+      "veiculoId": 1,
+      "descricao": "Teste testando"
+    }
   ]
 }

@@ -3,6 +3,7 @@
     <mat-tab label="Agendamentos"></mat-tab>
     <mat-tab label="Abastecimentos"></mat-tab>
     <mat-tab label="Manutenções"></mat-tab>
+    <mat-tab label="Ocorrências"></mat-tab>
   </mat-tab-group>
 
   <div class="conteudo">
@@ -98,6 +99,12 @@
       <div *ngSwitchCase="2">
         <app-manutencao-list></app-manutencao-list>
       </div>
+
+      <!-- Aba 3: Ocorrências -->
+      <div *ngSwitchCase="3">
+        <app-ocorrencia-list></app-ocorrencia-list>
+      </div>
+
 
     </ng-container>
   </div>

@@ -1,52 +1,62 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Agendamento } from '../services/agendamento.service';
+import { FormsModule } from '@angular/forms';
+import { OcorrenciaService, Ocorrencia } from '../services/ocorrencia.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
-  selector: 'app-ocorrencia-dialog',
   standalone: true,
+  selector: 'app-ocorrencia-dialog',
+  templateUrl: './ocorrencia-dialog.component.html',
+  styleUrls: ['./ocorrencia-dialog.component.css'],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    FormsModule,
+    MatDialogModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
-    MatProgressSpinnerModule
-  ],
-  templateUrl: './ocorrencia-dialog.component.html'
+    MatSnackBarModule,
+    MatProgressSpinner
+  ]
 })
 export class OcorrenciaDialogComponent {
-  ocorrenciaForm: FormGroup;
+  descricao: string = '';
   loading = false;
 
   constructor(
-    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any, // espera { motoristaId, veiculoId }
     private dialogRef: MatDialogRef<OcorrenciaDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public agendamento: Agendamento
-  ) {
-    this.ocorrenciaForm = this.fb.group({
-      descricao: ['', [Validators.required, Validators.minLength(10)]]
-    });
-  }
+    private ocorrenciaService: OcorrenciaService,
+    private snackBar: MatSnackBar
+  ) {}
 
   enviar(): void {
-    if (this.ocorrenciaForm.invalid) {
-      this.ocorrenciaForm.markAllAsTouched();
-      return;
-    }
+    if (!this.descricao.trim()) return;
+
+    const ocorrencia: Ocorrencia = {
+      motoristaId: this.data.motoristaId,
+      veiculoId: this.data.veiculoId,
+      descricao: this.descricao
+    };
 
     this.loading = true;
-
-    setTimeout(() => {
-      this.loading = false;
-      this.dialogRef.close(true);
-    }, 2000); // simulação de envio (mock)
+    this.ocorrenciaService.criar(ocorrencia).subscribe({
+      next: () => {
+        this.loading = false;
+        this.snackBar.open('Ocorrência registrada com sucesso!', 'Fechar', { duration: 3000 });
+        this.dialogRef.close(true);
+      },
+      error: () => {
+        this.loading = false;
+        this.snackBar.open('Erro ao registrar ocorrência.', 'Fechar', { duration: 3000 });
+      }
+    });
   }
 
   cancelar(): void {

@@ -13,6 +13,7 @@ import { VisualizarAgendamentoDialogComponent } from '../visualizar-agendamento-
 import { OcorrenciaDialogComponent } from '../ocorrencia-dialog/ocorrencia-dialog.component';
 import {AuthService} from '../services/auth.service';
 import {VeiculoService} from '../services/veiculo.service';
+import {OcorrenciaService} from '../services/ocorrencia.service';
 
 @Component({
   selector: 'app-motorista-home',
@@ -42,7 +43,8 @@ export class MotoristaHomeComponent implements OnInit {
     private snackBar: MatSnackBar,
     private authService: AuthService,
     private motoristaService: MotoristaService,
-    private veiculoService: VeiculoService
+    private veiculoService: VeiculoService,
+    private ocorrenciaService: OcorrenciaService
   ) {}
 
   ngOnInit(): void {
@@ -129,7 +131,10 @@ export class MotoristaHomeComponent implements OnInit {
   solicitarOcorrencia(agendamento: Agendamento): void {
     const dialogRef = this.dialog.open(OcorrenciaDialogComponent, {
       width: '400px',
-      data: agendamento
+      data: {
+        motoristaId: agendamento.motoristaId,
+        veiculoId: agendamento.veiculoId
+      }
     });
 
     dialogRef.afterClosed().subscribe(submetido => {

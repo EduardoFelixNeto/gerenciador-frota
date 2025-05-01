@@ -20,6 +20,7 @@ import { AgendamentoDialogComponent } from '../agendamento-dialog/agendamento-di
 
 import { AbastecimentoListComponent } from '../abastecimento-list/abastecimento-list.component';
 import { ManutencaoListComponent } from '../manutencao-list/manutencao-list.component';
+import {OcorrenciaListComponent} from '../ocorrencia-list/ocorrencia-list.component';
 
 @Component({
   selector: 'app-admin-home',
@@ -43,7 +44,8 @@ import { ManutencaoListComponent } from '../manutencao-list/manutencao-list.comp
     MatCardModule,
     AgendamentoDialogComponent,
     AbastecimentoListComponent,
-    ManutencaoListComponent
+    ManutencaoListComponent,
+    OcorrenciaListComponent
   ],
   templateUrl: './admin-home.component.html',
   styleUrls: ['./admin-home.component.css']

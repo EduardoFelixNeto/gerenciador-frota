@@ -1,23 +1,17 @@
-<h2 mat-dialog-title>Solicitar Ocorrência</h2>
+<!-- src/app/ocorrencia-dialog/ocorrencia-dialog.component.html -->
+<h2 mat-dialog-title>Registrar Ocorrência</h2>
 
-<form [formGroup]="ocorrenciaForm" (ngSubmit)="enviar()">
+<mat-dialog-content>
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Descrição da Ocorrência</mat-label>
-    <textarea matInput formControlName="descricao" rows="5" required></textarea>
-    <mat-error *ngIf="ocorrenciaForm.get('descricao')?.hasError('required')">Descrição é obrigatória</mat-error>
-    <mat-error *ngIf="ocorrenciaForm.get('descricao')?.hasError('minlength')">Mínimo 10 caracteres</mat-error>
+    <mat-label>Descrição do problema</mat-label>
+    <textarea matInput [(ngModel)]="descricao" rows="4" placeholder="Descreva o ocorrido"></textarea>
   </mat-form-field>
+</mat-dialog-content>
 
-  <div class="button-actions">
-    <button mat-raised-button color="primary" type="submit" [disabled]="loading">
-      <ng-container *ngIf="!loading">Enviar</ng-container>
-      <ng-container *ngIf="loading">
-        <mat-progress-spinner diameter="20" mode="indeterminate" color="accent"></mat-progress-spinner>
-      </ng-container>
-    </button>
-
-    <button mat-raised-button color="warn" type="button" (click)="cancelar()" [disabled]="loading">
-      Cancelar
-    </button>
-  </div>
-</form>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="enviar()" [disabled]="loading">
+    <span *ngIf="!loading">Enviar</span>
+    <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+  </button>
+</mat-dialog-actions>
