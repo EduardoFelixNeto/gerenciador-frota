@@ -1,35 +1,54 @@
 <div class="motorista-container">
-  <div *ngIf="loading" class="loading-spinner">
-    <mat-spinner></mat-spinner>
-  </div>
+  <mat-tab-group [(selectedIndex)]="abaSelecionada">
+    <mat-tab label="Próximas Viagens"></mat-tab>
+    <mat-tab label="Histórico de Viagens"></mat-tab>
+  </mat-tab-group>
 
-  <div *ngIf="!loading && agendamentos.length > 0">
-    <mat-card *ngFor="let agendamento of agendamentos" class="agendamento-card">
-      <mat-card-title>{{ agendamento.destino }}</mat-card-title>
-      <mat-card-subtitle>
-        {{ agendamento.dataInicio | date:'dd/MM/yyyy HH:mm' }} <br>
-        Veículo: {{ agendamento.veiculoPlaca }}
-      </mat-card-subtitle>
-      <mat-card-content>
-        <p><strong>Status:</strong> {{ agendamento.status }}</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="visualizarAgendamento(agendamento)">Visualizar</button>
+  <div class="conteudo">
+    <ng-container [ngSwitch]="abaSelecionada">
 
-        <button *ngIf="agendamento.status === 'AGENDADO'" mat-raised-button color="accent" (click)="iniciarViagem(agendamento)">
-          Iniciar Viagem
-        </button>
+      <!-- Aba 0: Próximos Agendamentos -->
+      <div *ngSwitchCase="0">
+        <div *ngIf="loading" class="loading-spinner">
+          <mat-spinner></mat-spinner>
+        </div>
 
-        <button *ngIf="agendamento.status === 'EM USO'" mat-raised-button color="warn" (click)="finalizarViagem(agendamento)">
-          Finalizar Viagem
-        </button>
+        <div *ngIf="!loading && agendamentos.length > 0">
+          <mat-card *ngFor="let agendamento of agendamentos" class="agendamento-card">
+            <mat-card-title>{{ agendamento.destino }}</mat-card-title>
+            <mat-card-subtitle>
+              {{ agendamento.dataInicio | date:'dd/MM/yyyy HH:mm' }} <br>
+              Veículo: {{ agendamento.veiculoPlaca }}
+            </mat-card-subtitle>
+            <mat-card-content>
+              <p><strong>Status:</strong> {{ agendamento.status }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" (click)="visualizarAgendamento(agendamento)">Visualizar</button>
 
-        <button mat-raised-button (click)="solicitarOcorrencia(agendamento)">Solicitar Ocorrência</button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
+              <button *ngIf="agendamento.status === 'AGENDADO'" mat-raised-button color="accent" (click)="iniciarViagem(agendamento)">
+                Iniciar Viagem
+              </button>
 
-  <div *ngIf="!loading && agendamentos.length === 0" class="no-agendamentos">
-    Nenhum agendamento encontrado.
+              <button *ngIf="agendamento.status === 'EM USO'" mat-raised-button color="warn" (click)="finalizarViagem(agendamento)">
+                Finalizar Viagem
+              </button>
+
+              <button mat-raised-button (click)="solicitarOcorrencia(agendamento)">Solicitar Ocorrência</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+
+        <div *ngIf="!loading && agendamentos.length === 0" class="no-agendamentos">
+          Nenhum agendamento encontrado.
+        </div>
+      </div>
+
+      <!-- Aba 1: Histórico de Viagens -->
+      <div *ngSwitchCase="1">
+        <app-historico-viagens></app-historico-viagens>
+      </div>
+
+    </ng-container>
   </div>
 </div>

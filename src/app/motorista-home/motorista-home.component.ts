@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -6,14 +6,17 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
+
 import { MotoristaService } from '../services/motorista.service';
 import { AgendamentoService, Agendamento } from '../services/agendamento.service';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { VisualizarAgendamentoDialogComponent } from '../visualizar-agendamento-dialog/visualizar-agendamento-dialog.component';
 import { OcorrenciaDialogComponent } from '../ocorrencia-dialog/ocorrencia-dialog.component';
-import {AuthService} from '../services/auth.service';
-import {VeiculoService} from '../services/veiculo.service';
-import {OcorrenciaService} from '../services/ocorrencia.service';
+import { AuthService } from '../services/auth.service';
+import { VeiculoService } from '../services/veiculo.service';
+import { OcorrenciaService } from '../services/ocorrencia.service';
+import { HistoricoViagensComponent } from '../historico-viagens/historico-viagens.component';
 
 @Component({
   selector: 'app-motorista-home',
@@ -26,14 +29,17 @@ import {OcorrenciaService} from '../services/ocorrencia.service';
     MatDialogModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatTabsModule,
     ConfirmDialogComponent,
     VisualizarAgendamentoDialogComponent,
-    OcorrenciaDialogComponent
+    OcorrenciaDialogComponent,
+    HistoricoViagensComponent
   ],
   templateUrl: './motorista-home.component.html',
   styleUrls: ['./motorista-home.component.css']
 })
 export class MotoristaHomeComponent implements OnInit {
+  abaSelecionada = 0;
   agendamentos: Agendamento[] = [];
   loading = false;
 
@@ -67,7 +73,7 @@ export class MotoristaHomeComponent implements OnInit {
                 veiculoPlaca: veiculos.find(v => Number(v.id) === a.veiculoId)?.placa
               }))
               .sort((a, b) => new Date(a.dataInicio).getTime() - new Date(b.dataInicio).getTime());
-            console.log(this.agendamentos);
+
             this.loading = false;
           });
         });
