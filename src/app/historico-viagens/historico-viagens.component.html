@@ -7,13 +7,17 @@
     <mat-card *ngFor="let viagem of historico" class="viagem-card">
       <mat-card-title>{{ viagem.destino }}</mat-card-title>
       <mat-card-subtitle>
-        Saída: {{ viagem.dataInicio | date:'dd/MM/yyyy HH:mm' }} <br>
+        Saída: {{ viagem.dataAgendamento | date:'dd/MM/yyyy HH:mm' }} <br>
         Veículo: {{ viagem.veiculoPlaca }}
       </mat-card-subtitle>
       <mat-card-content>
         <p><strong>Status:</strong> {{ viagem.status }}</p>
-        <p><strong>Quilometragem Inicial:</strong>100000</p>
-        <p><strong>Quilometragem Final:</strong>200000</p>
+        <p><strong>Data de Início:</strong> {{ viagem.dataInicio | date:'dd/MM/yyyy HH:mm' }}</p>
+        <p><strong>Quilometragem de Saída:</strong>{{ viagem.quilometragemSaida }}</p>
+        <p><strong>Observações Iniciais:</strong>{{ viagem.observacoesSaida }}</p>
+        <p><strong>Data Final:</strong>{{ viagem.dataFinal | date:'dd/MM/yyyy HH:mm' }}</p>
+        <p><strong>Quilometragem Final:</strong>{{ viagem.quilometragemFinal }}</p>
+        <p><strong>Observações Finais:</strong>{{ viagem.observacoesFinal }}</p>
       </mat-card-content>
     </mat-card>
   </div>

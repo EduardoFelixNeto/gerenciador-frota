@@ -17,6 +17,8 @@ import { AuthService } from '../services/auth.service';
 import { VeiculoService } from '../services/veiculo.service';
 import { OcorrenciaService } from '../services/ocorrencia.service';
 import { HistoricoViagensComponent } from '../historico-viagens/historico-viagens.component';
+import {InicioViagemDialogComponent} from '../inicio-viagem-dialog/inicio-viagem-dialog.component';
+import {FimViagemDialogComponent} from '../fim-viagem-dialog/fim-viagem-dialog.component';
 
 @Component({
   selector: 'app-motorista-home',
@@ -89,15 +91,18 @@ export class MotoristaHomeComponent implements OnInit {
   }
 
   iniciarViagem(agendamento: Agendamento): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    const dialogRef = this.dialog.open(InicioViagemDialogComponent, {
       width: '300px',
       data: { mensagem: 'Deseja iniciar esta viagem?' }
     });
 
-    dialogRef.afterClosed().subscribe(confirmado => {
-      if (confirmado) {
+    dialogRef.afterClosed().subscribe(dados => {
+      if (dados) {
         this.loading = true;
-        agendamento.status = 'EM USO';
+        agendamento.status = dados.status;
+        agendamento.dataInicio = dados.dataInicio;
+        agendamento.quilometragemSaida = dados.quilometragemSaida;
+        agendamento.observacoesSaida = dados.observacoes;
         this.agendamentoService.atualizar(agendamento).subscribe({
           next: () => {
             this.snackBar.open('Viagem iniciada com sucesso!', 'Fechar', { duration: 3000 });
@@ -105,6 +110,7 @@ export class MotoristaHomeComponent implements OnInit {
           },
           error: () => {
             this.snackBar.open('Erro ao iniciar viagem.', 'Fechar', { duration: 3000 });
+            this.carregarAgendamentos();
           }
         });
       }
@@ -112,15 +118,18 @@ export class MotoristaHomeComponent implements OnInit {
   }
 
   finalizarViagem(agendamento: Agendamento): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    const dialogRef = this.dialog.open(FimViagemDialogComponent, {
       width: '300px',
       data: { mensagem: 'Deseja finalizar esta viagem?' }
     });
 
-    dialogRef.afterClosed().subscribe(confirmado => {
-      if (confirmado) {
+    dialogRef.afterClosed().subscribe(dados => {
+      if (dados) {
         this.loading = true;
-        agendamento.status = 'FINALIZADO';
+        agendamento.status = dados.status;
+        agendamento.dataFinal = dados.dataFinal;
+        agendamento.quilometragemFinal = dados.quilometragemFinal;
+        agendamento.observacoesFinal = dados.observacoes;
         this.agendamentoService.atualizar(agendamento).subscribe({
           next: () => {
             this.snackBar.open('Viagem finalizada com sucesso!', 'Fechar', { duration: 3000 });
@@ -128,6 +137,7 @@ export class MotoristaHomeComponent implements OnInit {
           },
           error: () => {
             this.snackBar.open('Erro ao finalizar viagem.', 'Fechar', { duration: 3000 });
+            this.carregarAgendamentos();
           }
         });
       }

@@ -179,84 +179,119 @@
   ],
   "agendamentos": [
     {
-      "id": 1,
+      "id": "1",
       "motoristaId": 4,
       "veiculoId": 1,
       "destino": "Curitiba",
       "dataInicio": "2025-04-25T09:00:00",
-      "status": "FINALIZADO"
+      "status": "FINALIZADO",
+      "quilometragemSaida": 10200,
+      "observacoes": "Viagem tranquila, sem ocorrências"
     },
     {
-      "id": 2,
+      "id": "2",
       "motoristaId": 5,
       "veiculoId": 2,
       "destino": "São Paulo",
       "dataInicio": "2025-04-26T14:00:00",
-      "status": "EM USO"
+      "status": "EM USO",
+      "quilometragemSaida": 20500,
+      "observacoes": "Trânsito intenso na saída"
     },
     {
-      "id": 3,
+      "id": "4",
       "motoristaId": 4,
       "veiculoId": 3,
       "destino": "Recife",
-      "dataInicio": "2025-05-01T06:59:00",
-      "status": "PENDENTE"
+      "dataInicio": "2025-05-11T17:32:18.630Z",
+      "status": "FINALIZADO",
+      "motoristaNome": "Paulo Oliveira",
+      "veiculoPlaca": "DEF7G89",
+      "quilometragemSaida": 4,
+      "observacoes": "tyetando",
+      "quilometragemFinal": 40500,
+      "dataFinal": "2025-05-11T17:50:33.504Z",
+      "observacoesFinal": "TESTANDO4"
     },
     {
-      "id": 4,
+      "id": "3",
       "motoristaId": 7,
       "veiculoId": 4,
       "destino": "Belo Horizonte",
       "dataInicio": "2025-05-10T10:30:00",
-      "status": "FINALIZADO"
+      "status": "FINALIZADO",
+      "quilometragemSaida": 40500,
+      "observacoes": "Parada para manutenção preventiva no caminho"
     },
     {
-      "id": 5,
+      "id": "5",
       "motoristaId": 8,
       "veiculoId": 5,
       "destino": "Porto Alegre",
       "dataInicio": "2025-06-05T08:00:00",
-      "status": "FINALIZADO"
+      "status": "FINALIZADO",
+      "quilometragemSaida": 51000,
+      "observacoes": ""
     },
     {
-      "id": 6,
+      "id": "6",
       "motoristaId": 4,
       "veiculoId": 6,
       "destino": "Florianópolis",
-      "dataInicio": "2025-06-12T09:00:00",
-      "status": "PENDENTE"
+      "dataInicio": "2025-05-11T17:58:57.652Z",
+      "status": "FINALIZADO",
+      "motoristaNome": "Paulo Oliveira",
+      "veiculoPlaca": "MNO6P78",
+      "quilometragemSaida": 8,
+      "observacoesSaida": "TESTE8",
+      "dataFinal": "2025-05-11T17:59:11.299Z",
+      "quilometragemFinal": 15,
+      "observacoesFinal": "TESTEANDO15"
     },
     {
-      "id": 7,
-      "motoristaId": 5,
+      "id": "7",
+      "motoristaId": 4,
       "veiculoId": 1,
       "destino": "Vitória",
-      "dataInicio": "2025-06-18T13:00:00",
-      "status": "AGENDADO"
+      "dataAgendamento": "2025-06-18T13:00:00",
+      "usuarioCriacao": 3,
+      "status": "FINALIZADO",
+      "motoristaNome": "Paulo Oliveira",
+      "veiculoPlaca": "ABC1D23",
+      "dataInicio": "2025-05-11T18:15:37.417Z",
+      "quilometragemSaida": 7,
+      "observacoesSaida": "teste7",
+      "dataFinal": "2025-05-11T18:15:50.913Z",
+      "quilometragemFinal": 10,
+      "observacoesFinal": "teste 10"
     },
     {
-      "id": 8,
+      "id": "8",
       "motoristaId": 6,
       "veiculoId": 2,
       "destino": "Salvador",
       "dataInicio": "2025-07-01T07:00:00",
-      "status": "PENDENTE"
+      "status": "AGENDADO"
     },
     {
-      "id": 9,
+      "id": "9",
       "motoristaId": 7,
       "veiculoId": 3,
       "destino": "Fortaleza",
       "dataInicio": "2025-07-15T10:00:00",
-      "status": "EM USO"
+      "status": "EM USO",
+      "quilometragemSaida": 30700,
+      "observacoes": "Clima chuvoso durante o trajeto"
     },
     {
-      "id": 10,
+      "id": "10",
       "motoristaId": 8,
       "veiculoId": 4,
       "destino": "Manaus",
       "dataInicio": "2025-08-01T15:00:00",
-      "status": "FINALIZADO"
+      "status": "FINALIZADO",
+      "quilometragemSaida": 41500,
+      "observacoes": "Demora na entrega da carga"
     }
   ],
   "abastecimentos": [
