@@ -68,11 +68,11 @@ export class MotoristaHomeComponent implements OnInit {
         this.motoristaService.listar().subscribe(motoristas => {
           this.veiculoService.listar().subscribe(veiculos => {
             this.agendamentos = data
-              .filter(a => a.motoristaId === motoristaId && ['PENDENTE', 'AGENDADO', 'EM USO'].includes(a.status))
+              .filter(a => a.motorista.id === motoristaId?.toString() && ['PENDENTE', 'AGENDADO', 'EM USO'].includes(a.status))
               .map(a => ({
                 ...a,
-                motoristaNome: motoristas.find(m => Number(m.id) === a.motoristaId)?.nome,
-                veiculoPlaca: veiculos.find(v => Number(v.id) === a.veiculoId)?.placa
+                motoristaNome: motoristas.find(m => Number(m.id) === a.motorista.id)?.nome,
+                veiculoPlaca: veiculos.find(v => Number(v.id) === a.veiculo.id)?.placa
               }))
               .sort((a, b) => new Date(a.dataInicio).getTime() - new Date(b.dataInicio).getTime());
 
@@ -148,8 +148,8 @@ export class MotoristaHomeComponent implements OnInit {
     const dialogRef = this.dialog.open(OcorrenciaDialogComponent, {
       width: '400px',
       data: {
-        motoristaId: agendamento.motoristaId,
-        veiculoId: agendamento.veiculoId
+        motoristaId: agendamento.motorista.id,
+        veiculoId: agendamento.veiculo.id
       }
     });
 

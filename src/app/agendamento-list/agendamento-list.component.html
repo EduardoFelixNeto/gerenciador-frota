@@ -1,6 +1,7 @@
 <div class="agendamento-container">
   <div class="toolbar">
     <input matInput placeholder="Buscar..." [(ngModel)]="filtro" (keyup)="aplicarFiltro()" class="filtro-input">
+
     <button mat-raised-button color="primary" (click)="abrirDialog()">
       Novo Agendamento
     </button>
@@ -11,7 +12,7 @@
     <!-- Motorista -->
     <ng-container matColumnDef="motorista">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Motorista </th>
-      <td mat-cell *matCellDef="let agendamento"> {{ agendamento.motorista }} </td>
+      <td mat-cell *matCellDef="let agendamento"> {{ agendamento.motorista.nome }} </td>
     </ng-container>
 
     <!-- Destino -->
@@ -41,6 +42,18 @@
         </button>
         <button mat-icon-button color="warn" (click)="excluirAgendamento(agendamento.id!)">
           <mat-icon>delete</mat-icon>
+        </button>
+
+        <button *ngIf="agendamento.status === 'PENDENTE'" mat-stroked-button color="primary" (click)="agendarViagem(agendamento)">
+          Agendar Viagem
+        </button>
+
+        <button *ngIf="agendamento.status === 'EM USO'" mat-stroked-button color="accent" (click)="registrarAbastecimento(agendamento)">
+          Registrar Abastecimento
+        </button>
+
+        <button *ngIf="agendamento.status === 'FINALIZADO'" mat-stroked-button color="warn" (click)="registrarManutencao(agendamento)">
+          Registrar Manutenção
         </button>
       </td>
     </ng-container>

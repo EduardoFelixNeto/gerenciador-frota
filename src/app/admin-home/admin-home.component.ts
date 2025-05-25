@@ -21,6 +21,9 @@ import { AgendamentoDialogComponent } from '../agendamento-dialog/agendamento-di
 import { AbastecimentoListComponent } from '../abastecimento-list/abastecimento-list.component';
 import { ManutencaoListComponent } from '../manutencao-list/manutencao-list.component';
 import {OcorrenciaListComponent} from '../ocorrencia-list/ocorrencia-list.component';
+import {AgendamentoListComponent} from '../agendamento-list/agendamento-list.component';
+import {MotoristaListComponent} from '../motorista-list/motorista-list.component';
+import {VeiculoListComponent} from '../veiculo-list/veiculo-list.component';
 
 @Component({
   selector: 'app-admin-home',
@@ -45,7 +48,10 @@ import {OcorrenciaListComponent} from '../ocorrencia-list/ocorrencia-list.compon
     AgendamentoDialogComponent,
     AbastecimentoListComponent,
     ManutencaoListComponent,
-    OcorrenciaListComponent
+    OcorrenciaListComponent,
+    AgendamentoListComponent,
+    MotoristaListComponent,
+    VeiculoListComponent
   ],
   templateUrl: './admin-home.component.html',
   styleUrls: ['./admin-home.component.css']
@@ -99,7 +105,7 @@ export class AdminHomeComponent implements OnInit {
     let filtros = this.dataSource.data;
 
     if (motorista) {
-      filtros = filtros.filter(a => a.motoristaId);
+      filtros = filtros.filter(a => a.motorista.id);
     }
 
     if (status) {

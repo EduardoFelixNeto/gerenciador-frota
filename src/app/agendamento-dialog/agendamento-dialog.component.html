@@ -4,10 +4,23 @@
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Motorista</mat-label>
     <mat-select formControlName="motorista" required>
-      <mat-option *ngFor="let motorista of motoristasMock" [value]="motorista">{{ motorista }}</mat-option>
+      <mat-option *ngFor="let motorista of motoristas" [value]="motorista">
+        {{ motorista.nome }}
+      </mat-option>
     </mat-select>
     <mat-error *ngIf="agendamentoForm.get('motorista')?.hasError('required')">Motorista é obrigatório</mat-error>
   </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Veículo</mat-label>
+    <mat-select formControlName="veiculo" required>
+      <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo">
+        {{ veiculo.placa }} - {{ veiculo.modelo }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="agendamentoForm.get('veiculo')?.hasError('required')">Veículo é obrigatório</mat-error>
+  </mat-form-field>
+
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Destino</mat-label>

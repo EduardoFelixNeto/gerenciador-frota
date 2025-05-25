@@ -4,6 +4,8 @@
     <mat-tab label="Abastecimentos"></mat-tab>
     <mat-tab label="Manutenções"></mat-tab>
     <mat-tab label="Ocorrências"></mat-tab>
+    <mat-tab label="Motoristas"></mat-tab>
+    <mat-tab label="Veículos"></mat-tab>
   </mat-tab-group>
 
   <div class="conteudo">
@@ -11,83 +13,7 @@
 
       <!-- Aba 0: Agendamentos -->
       <div *ngSwitchCase="0">
-        <!-- Conteúdo igual ao seu admin-home antigo (já está pronto) -->
-        <div *ngIf="loading" class="loading-spinner">
-          <mat-spinner></mat-spinner>
-        </div>
-
-        <div *ngIf="!loading">
-          <mat-card class="filtro-card">
-            <form [formGroup]="filtroForm" (ngSubmit)="aplicarFiltro()">
-              <div class="filtros">
-                <mat-form-field appearance="outline" class="filtro-item">
-                  <mat-label>Motorista</mat-label>
-                  <input matInput formControlName="motorista" placeholder="Nome do motorista">
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" class="filtro-item">
-                  <mat-label>Status</mat-label>
-                  <mat-select formControlName="status">
-                    <mat-option value="">Todos</mat-option>
-                    <mat-option value="PENDENTE">Pendente</mat-option>
-                    <mat-option value="AGENDADO">Agendado</mat-option>
-                    <mat-option value="EM USO">Em Uso</mat-option>
-                    <mat-option value="FINALIZADO">Finalizado</mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" class="filtro-item">
-                  <mat-label>Período</mat-label>
-                  <input matInput type="text" formControlName="periodo" placeholder="Ex: 01/01/2025 - 31/12/2025">
-                </mat-form-field>
-
-                <button mat-raised-button color="primary" type="submit">Filtrar</button>
-              </div>
-            </form>
-          </mat-card>
-
-          <div class="nova-viagem">
-            <button mat-raised-button color="accent" (click)="novoAgendamento()">Novo Agendamento</button>
-          </div>
-
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-
-            <ng-container matColumnDef="motorista">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Motorista </th>
-              <td mat-cell *matCellDef="let agendamento"> {{ agendamento.motorista }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="destino">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Destino </th>
-              <td mat-cell *matCellDef="let agendamento"> {{ agendamento.destino }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="dataInicio">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Data de Saída </th>
-              <td mat-cell *matCellDef="let agendamento"> {{ agendamento.dataInicio | date:'dd/MM/yyyy HH:mm' }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-              <td mat-cell *matCellDef="let agendamento"> {{ agendamento.status }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="acoes">
-              <th mat-header-cell *matHeaderCellDef> Ações </th>
-              <td mat-cell *matCellDef="let agendamento">
-                <button mat-icon-button color="primary" (click)="editarAgendamento(agendamento)">
-                  <mat-icon>edit</mat-icon>
-                </button>
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-          </table>
-
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-        </div>
+        <app-agendamento-list></app-agendamento-list>
       </div>
 
       <!-- Aba 1: Abastecimentos -->
@@ -105,6 +31,15 @@
         <app-ocorrencia-list></app-ocorrencia-list>
       </div>
 
+      <!-- Aba 4: Motoristas -->
+      <div *ngSwitchCase="4">
+        <app-motorista-list></app-motorista-list>
+      </div>
+
+      <!-- Aba 3: Veículos -->
+      <div *ngSwitchCase="5">
+        <app-veiculo-list></app-veiculo-list>
+      </div>
 
     </ng-container>
   </div>

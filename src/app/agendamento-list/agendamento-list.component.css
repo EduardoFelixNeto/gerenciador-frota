@@ -13,3 +13,8 @@
   width: 300px;
   margin-right: 10px;
 }
+
+.data-input {
+  margin: 0 8px;
+  max-width: 180px;
+}

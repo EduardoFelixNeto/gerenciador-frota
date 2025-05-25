@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {Motorista} from './motorista.service';
+import {Veiculo} from './veiculo.service';
 
 export interface Agendamento {
   id?: number;
-  motoristaId: number;
+  motorista: Motorista;
   destino: string;
   dataAgendamento: string;
   dataInicio: string;
   dataFinal: string
   status: string;
-  veiculoId: number;
-  veiculoPlaca?: string;
+  veiculo: Veiculo;
   quilometragemSaida?: number;
   observacoesSaida?: string;
   quilometragemFinal?: number;
