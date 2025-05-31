@@ -43,29 +43,28 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    if (this.loginForm.invalid) {
-      return;
-    }
+    if (this.loginForm.invalid) return;
 
     this.loading = true;
-
     const { email, senha } = this.loginForm.value;
 
     this.authService.login(email, senha).subscribe({
-      next: (response) => {
+      next: (user) => {
         this.loading = false;
-        if (response.perfil === 'ADMINISTRADOR') {
+
+        if (user.perfil === 'ADMIN') {
           this.router.navigate(['/admin']);
-        } else if (response.perfil === 'MOTORISTA') {
+        } else if (user.perfil === 'MOTORISTA') {
           this.router.navigate(['/motorista']);
         } else {
           this.snackBar.open('Perfil de usuário inválido.', 'Fechar', { duration: 3000 });
         }
       },
-      error: (error) => {
+      error: (err) => {
         this.loading = false;
-        this.snackBar.open(error.error?.message || 'Erro ao fazer login.', 'Fechar', { duration: 3000 });
+        this.snackBar.open(err.error?.message || 'Erro ao fazer login.', 'Fechar', { duration: 3000 });
       }
     });
   }
+
 }

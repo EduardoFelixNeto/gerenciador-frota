@@ -1,84 +1,60 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {map, Observable, of, tap} from 'rxjs';
+import {map, Observable, tap} from 'rxjs';
 
 export interface AuthResponse {
-  token: string;
-  perfil: 'ADMINISTRADOR' | 'MOTORISTA';
-  nome: string;
+  jwt: string;
+  user: User;
+}
+
+export interface User {
   id: number;
+  nome: string;
+  email: string;
+  perfil: 'ADMIN' | 'MOTORISTA';
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'http://localhost:8080/api';
+  private currentUser: User | null = null;
 
   constructor(private http: HttpClient) {}
 
-  login(email: string, senha: string): Observable<any> {
-    return this.http.get<any[]>(`${this.apiUrl}/usuarios?email=${email}&senha=${senha}`).pipe(
-      map(usuarios => {
-        if (usuarios.length > 0) {
-          return {
-            token: 'fake-jwt-token',
-            perfil: usuarios[0].perfil,
-            nome: usuarios[0].nome,
-            id: usuarios[0].id
-          };
-        } else {
-          throw new Error('E-mail ou senha inválidos');
-        }
-      }),
-      tap(user => {
-        localStorage.setItem('token', user.token);
-        localStorage.setItem('perfil', user.perfil);
-        localStorage.setItem('nome', user.nome);
-        localStorage.setItem('id', String(user.id));
+  login(email: string, senha: string): Observable<User> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, { email, senha }).pipe(
+      tap(res => localStorage.setItem('token', res.jwt)),
+      map(res => {
+        this.currentUser = res.user;
+        return res.user;
       })
     );
   }
 
   logout(): void {
     localStorage.removeItem('token');
-    localStorage.removeItem('perfil');
-    localStorage.removeItem('nome');
+    this.currentUser = null;
   }
 
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  getPerfil(): string | null {
-    return localStorage.getItem('perfil');
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  getUsuarioLogado(): User | null {
+    return this.currentUser;
   }
 
   getNome(): string | null {
-    return localStorage.getItem('nome');
+    return this.currentUser?.nome ?? null;
   }
 
-  getId(): number | null{
-    const id = localStorage.getItem('id');
-    return id ? parseInt(id, 10) : 0;
+  getPerfil(): string | null {
+    return this.currentUser?.perfil ?? null;
   }
-
-  isLoggedIn(): boolean {
-    return this.getToken() !== null;
-  }
-
-  getUsuarioLogado(): { nome: string; perfil: string; id: number } | null {
-    const token = this.getToken();
-    const perfil = this.getPerfil();
-    const nome = this.getNome();
-    const id = this.getId();
-
-    console.log(`Token: ${token}, Perfil: ${perfil}, Nome: ${nome}, ID: ${id}`);
-
-    if (token && perfil && nome && id) {
-      return { nome, perfil, id };
-    }
-    return null;
-  }
-
 }

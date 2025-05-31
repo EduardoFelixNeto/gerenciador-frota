@@ -1,14 +1,26 @@
-import { Injectable } from '@angular/core';
+// src/app/guards/auth.guard.ts
+import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-export function authGuard(authService: AuthService, router: Router): CanActivateFn {
+export function authGuard(perfisPermitidos: string[] = []): CanActivateFn {
   return () => {
-    if (authService.isLoggedIn()) {
-      return true;
-    } else {
+    const authService = inject(AuthService);
+    const router = inject(Router);
+
+    if (!authService.isLoggedIn()) {
       router.navigate(['/login']);
       return false;
     }
+
+    if (perfisPermitidos.length > 0) {
+      const perfilUsuario = authService.getPerfil();
+      if (!perfilUsuario || !perfisPermitidos.includes(perfilUsuario)) {
+        router.navigate(['/acesso-negado']);
+        return false;
+      }
+    }
+
+    return true;
   };
 }

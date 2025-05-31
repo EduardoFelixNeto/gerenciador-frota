@@ -1,7 +1,5 @@
-import {Router, Routes} from '@angular/router';
-import {inject} from '@angular/core';
-import {authGuard} from './guards/auth.guard';
-import {AuthService} from './services/auth.service';
+import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -15,13 +13,17 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    canActivate: [() => authGuard(inject(AuthService), inject(Router))],
+    canActivate: [authGuard(['ADMINISTRADOR'])],
     loadComponent: () => import('./admin-home/admin-home.component').then(c => c.AdminHomeComponent),
   },
   {
     path: 'motorista',
-    canActivate: [() => authGuard(inject(AuthService), inject(Router))],
+    canActivate: [authGuard(['MOTORISTA'])],
     loadComponent: () => import('./motorista-home/motorista-home.component').then(c => c.MotoristaHomeComponent),
+  },
+  {
+    path: 'acesso-negado',
+    loadComponent: () => import('./acesso-negado/acesso-negado.component').then(c => c.AcessoNegadoComponent),
   },
   {
     path: '**',
