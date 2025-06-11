@@ -17,12 +17,12 @@ export interface Motorista {
   providedIn: 'root'
 })
 export class MotoristaService {
-  private apiUrl = 'http://localhost:3000/motoristas';
+  private apiUrl = 'http://localhost:8080/api/users';
 
   constructor(private http: HttpClient) {}
 
   listar(): Observable<Motorista[]> {
-    return this.http.get<Motorista[]>(this.apiUrl);
+    return this.http.get<Motorista[]>(`${this.apiUrl}/getAtivos`);
   }
 
   buscarPorId(id: number): Observable<Motorista> {

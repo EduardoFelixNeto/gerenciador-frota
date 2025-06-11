@@ -7,11 +7,11 @@
   <p><strong>Motorista:</strong> {{ agendamento.motorista.nome }}</p>
   <p><strong>Veículo:</strong> {{ agendamento.veiculo.placa }}</p>
   <p *ngIf="agendamento.status === 'EM USO'"><strong>Data de Saída:</strong> {{ agendamento.dataInicio | date:'dd/MM/yyyy HH:mm' }}</p>
-  <p *ngIf="agendamento.status === 'EM USO'"><strong>Quilometragem Inicial:</strong> {{ agendamento.quilometragemSaida }}</p>
-  <p *ngIf="agendamento.status === 'EM USO'"><strong>Observações Iniciais:</strong> {{ agendamento.observacoesSaida }}</p>
+  <p *ngIf="agendamento.status === 'EM USO'"><strong>Quilometragem Inicial:</strong> {{ agendamento.quilometragemInicial }}</p>
+  <p *ngIf="agendamento.status === 'EM USO'"><strong>Observações Iniciais:</strong> {{ agendamento.observacaoInicio }}</p>
   <p *ngIf="agendamento.status === 'FINALIZADO'"><strong>Data de Chegada:</strong> {{ agendamento.dataFinal | date:'dd/MM/yyyy HH:mm' }}</p>
   <p *ngIf="agendamento.status === 'FINALIZADO'"><strong>Quilometragem Final:</strong> {{ agendamento.quilometragemFinal }}</p>
-  <p *ngIf="agendamento.status === 'FINALIZADO'"><strong>Observações Finais:</strong> {{ agendamento.observacoesFinal }}</p>
+  <p *ngIf="agendamento.status === 'FINALIZADO'"><strong>Observações Finais:</strong> {{ agendamento.observacaoFim }}</p>
 
 </mat-dialog-content>
 

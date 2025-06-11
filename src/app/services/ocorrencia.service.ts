@@ -14,7 +14,7 @@ export interface Ocorrencia {
   providedIn: 'root'
 })
 export class OcorrenciaService {
-  private apiUrl = 'http://localhost:3000/ocorrencias';
+  private apiUrl = 'http://localhost:8080/api/ocorrencia';
 
   constructor(private http: HttpClient) {}
 

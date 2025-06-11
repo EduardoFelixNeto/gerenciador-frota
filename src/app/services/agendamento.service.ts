@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Motorista} from './motorista.service';
 import {Veiculo} from './veiculo.service';
+import {AuthService} from './auth.service';
 
 export interface Agendamento {
   id?: number;
@@ -10,26 +11,30 @@ export interface Agendamento {
   destino: string;
   dataAgendamento: string;
   dataInicio: string;
-  dataFinal: string
+  dataFinal: string;
   status: string;
   veiculo: Veiculo;
-  quilometragemSaida?: number;
-  observacoesSaida?: string;
+  quilometragemInicial?: number;
+  observacaoInicio?: string;
   quilometragemFinal?: number;
-  observacoesFinal?: string;
+  observacaoFim?: string;
 }
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class AgendamentoService {
-  private apiUrl = 'http://localhost:3000/agendamentos';
+  private apiUrl = 'http://localhost:8080/api/agendamentos';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   listar(): Observable<Agendamento[]> {
-    return this.http.get<Agendamento[]>(this.apiUrl);
+    return this.http.get<Agendamento[]>(`${this.apiUrl}/getAll`, { headers: this.authService.getAuthHeaders().headers });
+  }
+
+  listarPorMotorista(): Observable<Agendamento[]> {
+    const motoristaId = this.authService.getUsuarioLogado()?.id;
+    return this.http.get<Agendamento[]>(`${this.apiUrl}/getAllMotorista/${motoristaId}`, { headers: this.authService.getAuthHeaders().headers });
   }
 
   buscarPorId(id: number): Observable<Agendamento> {

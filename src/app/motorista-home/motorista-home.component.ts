@@ -61,25 +61,15 @@ export class MotoristaHomeComponent implements OnInit {
 
   carregarAgendamentos(): void {
     this.loading = true;
-    const motoristaId = this.authService.getUsuarioLogado()?.id;
 
-    this.agendamentoService.listar().subscribe({
+    this.agendamentoService.listarPorMotorista().subscribe({
       next: (data) => {
-        this.motoristaService.listar().subscribe(motoristas => {
-          this.veiculoService.listar().subscribe(veiculos => {
-            this.agendamentos = data
-              .filter(a => a.motorista.id === motoristaId?.toString() && ['PENDENTE', 'AGENDADO', 'EM USO'].includes(a.status))
-              .map(a => ({
-                ...a,
-                motoristaNome: motoristas.find(m => Number(m.id) === a.motorista.id)?.nome,
-                veiculoPlaca: veiculos.find(v => Number(v.id) === a.veiculo.id)?.placa
-              }))
-              .sort((a, b) => new Date(a.dataInicio).getTime() - new Date(b.dataInicio).getTime());
-
-            this.loading = false;
-          });
-        });
-      }
+        this.agendamentos = data
+          .filter(a => ['PENDENTE', 'AGENDADO', 'EM_USO'].includes(a.status))
+          .sort((a, b) => new Date(a.dataInicio).getTime() - new Date(b.dataInicio).getTime());
+        this.loading = false;
+      },
+      error: () => this.loading = false
     });
   }
 
@@ -101,8 +91,8 @@ export class MotoristaHomeComponent implements OnInit {
         this.loading = true;
         agendamento.status = dados.status;
         agendamento.dataInicio = dados.dataInicio;
-        agendamento.quilometragemSaida = dados.quilometragemSaida;
-        agendamento.observacoesSaida = dados.observacoes;
+        agendamento.quilometragemInicial = dados.quilometragemSaida;
+        agendamento.observacaoInicio = dados.observacoes;
         this.agendamentoService.atualizar(agendamento).subscribe({
           next: () => {
             this.snackBar.open('Viagem iniciada com sucesso!', 'Fechar', { duration: 3000 });
@@ -129,7 +119,7 @@ export class MotoristaHomeComponent implements OnInit {
         agendamento.status = dados.status;
         agendamento.dataFinal = dados.dataFinal;
         agendamento.quilometragemFinal = dados.quilometragemFinal;
-        agendamento.observacoesFinal = dados.observacoes;
+        agendamento.observacaoFim = dados.observacoes;
         this.agendamentoService.atualizar(agendamento).subscribe({
           next: () => {
             this.snackBar.open('Viagem finalizada com sucesso!', 'Fechar', { duration: 3000 });

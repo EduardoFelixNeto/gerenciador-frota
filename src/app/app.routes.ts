@@ -13,7 +13,7 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    canActivate: [authGuard(['ADMINISTRADOR'])],
+    canActivate: [authGuard(['ADMIN'])],
     loadComponent: () => import('./admin-home/admin-home.component').then(c => c.AdminHomeComponent),
   },
   {

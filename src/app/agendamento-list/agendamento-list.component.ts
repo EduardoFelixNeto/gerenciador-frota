@@ -120,7 +120,7 @@ export class AgendamentoListComponent implements OnInit {
       dataAbastecimento: new Date().toISOString().slice(0, 10),
       litros: 0,
       valorTotal: 0,
-      kmAtual: agendamento.quilometragemSaida ?? agendamento.veiculo.quilometragemAtual
+      kmAtual: agendamento.quilometragemInicial ?? agendamento.veiculo.quilometragemAtual
     };
 
     const dialogRef = this.dialog.open(AbastecimentoDialogComponent, {

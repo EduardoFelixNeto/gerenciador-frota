@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {map, Observable, tap} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {map, Observable, of, switchMap, tap} from 'rxjs';
 
 export interface AuthResponse {
   jwt: string;
-  user: User;
+  userDetails: User;
 }
 
 export interface User {
@@ -21,17 +21,32 @@ export class AuthService {
   private apiUrl = 'http://localhost:8080/api';
   private currentUser: User | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const savedUser = localStorage.getItem('userDetails');
+    if (savedUser) {
+      this.currentUser = JSON.parse(savedUser);
+    }
+  }
 
   login(email: string, senha: string): Observable<User> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, { email, senha }).pipe(
-      tap(res => localStorage.setItem('token', res.jwt)),
-      map(res => {
-        this.currentUser = res.user;
-        return res.user;
-      })
+      tap(res => {
+        localStorage.setItem('token', res.jwt);
+
+        const minimalUser: User = {
+          id: res.userDetails.id,
+          nome: res.userDetails.nome,
+          email: res.userDetails.email,
+          perfil: res.userDetails.perfil,
+        };
+
+        localStorage.setItem('userDetails', JSON.stringify(minimalUser));
+        this.currentUser = minimalUser;
+      }),
+      switchMap(res => of(res.userDetails))
     );
   }
+
 
   logout(): void {
     localStorage.removeItem('token');
@@ -57,4 +72,14 @@ export class AuthService {
   getPerfil(): string | null {
     return this.currentUser?.perfil ?? null;
   }
+
+  getAuthHeaders(): { headers: HttpHeaders } {
+    const token = this.getToken();
+    return {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    };
+  }
+
 }

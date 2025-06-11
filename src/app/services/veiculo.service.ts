@@ -16,12 +16,12 @@ export interface Veiculo {
   providedIn: 'root'
 })
 export class VeiculoService {
-  private apiUrl = 'http://localhost:3000/veiculos';
+  private apiUrl = 'http://localhost:8080/api/veiculos';
 
   constructor(private http: HttpClient) {}
 
   listar(): Observable<Veiculo[]> {
-    return this.http.get<Veiculo[]>(this.apiUrl);
+    return this.http.get<Veiculo[]>(`${this.apiUrl}/getAll`);
   }
 
   buscarPorId(id: number): Observable<Veiculo> {
