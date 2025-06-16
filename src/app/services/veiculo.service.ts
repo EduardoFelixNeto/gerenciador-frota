@@ -29,7 +29,7 @@ export class VeiculoService {
   }
 
   criar(veiculo: Veiculo): Observable<Veiculo> {
-    return this.http.post<Veiculo>(this.apiUrl, veiculo);
+    return this.http.post<Veiculo>(`${this.apiUrl}/create`, veiculo);
   }
 
   atualizar(veiculo: Veiculo): Observable<Veiculo> {

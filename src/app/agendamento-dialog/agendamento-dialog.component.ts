@@ -27,7 +27,7 @@ import { VeiculoService, Veiculo } from '../services/veiculo.service';
 })
 export class AgendamentoDialogComponent implements OnInit {
   agendamentoForm: FormGroup;
-  statusOptions = ['PENDENTE', 'AGENDADO', 'EM USO', 'FINALIZADO'];
+  statusOptions = ['PENDENTE', 'AGENDADO', 'EM_USO', 'FINALIZADO'];
   motoristas: Motorista[] = [];
   veiculos: Veiculo[] = [];
   loading = false;
@@ -90,7 +90,9 @@ export class AgendamentoDialogComponent implements OnInit {
   ngOnInit(): void {
     this.motoristaService.listar().subscribe({
       next: motoristas => {
-        this.motoristas = motoristas;
+        this.motoristas = motoristas.filter(
+          motorista => motorista.perfil === 'MOTORISTA'
+        );
 
         if (this.data?.motorista?.id) {
           const motoristaSelecionado = this.motoristas.find(m => m.id == this.data?.motorista.id);

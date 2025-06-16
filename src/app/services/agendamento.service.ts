@@ -9,9 +9,10 @@ export interface Agendamento {
   id?: number;
   motorista: Motorista;
   destino: string;
-  dataAgendamento: string;
+  dataSaida: string;
   dataInicio: string;
-  dataFinal: string;
+  dataFim: string;
+  dataRetorno: string;
   status: string;
   veiculo: Veiculo;
   quilometragemInicial?: number;
@@ -42,11 +43,10 @@ export class AgendamentoService {
   }
 
   criar(agendamento: Agendamento): Observable<Agendamento> {
-    return this.http.post<Agendamento>(this.apiUrl, agendamento);
+    return this.http.post<Agendamento>(`${this.apiUrl}/create`, agendamento);
   }
 
   atualizar(agendamento: Agendamento): Observable<Agendamento> {
-    console.log(agendamento);
     return this.http.put<Agendamento>(`${this.apiUrl}/${agendamento.id}`, agendamento);
   }
 

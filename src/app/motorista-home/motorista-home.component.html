@@ -17,11 +17,11 @@
           <mat-card *ngFor="let agendamento of agendamentos" class="agendamento-card">
             <mat-card-title>{{ agendamento.destino }}</mat-card-title>
             <mat-card-subtitle>
-              {{ agendamento.dataInicio | date:'dd/MM/yyyy HH:mm' }} <br>
+              {{ agendamento.dataSaida | date:'dd/MM/yyyy HH:mm' }} <br>
               Veículo: {{ agendamento.veiculo.placa }}
             </mat-card-subtitle>
             <mat-card-content>
-              <p><strong>Status:</strong> {{ agendamento.status }}</p>
+              <p><strong>Status:</strong> {{ agendamento.status.replace('_', ' ') }}</p>
             </mat-card-content>
             <mat-card-actions>
               <button mat-raised-button color="primary" (click)="visualizarAgendamento(agendamento)">Visualizar</button>
@@ -30,7 +30,7 @@
                 Iniciar Viagem
               </button>
 
-              <button *ngIf="agendamento.status === 'EM USO'" mat-raised-button color="warn" (click)="finalizarViagem(agendamento)">
+              <button *ngIf="agendamento.status === 'EM_USO'" mat-raised-button color="warn" (click)="finalizarViagem(agendamento)">
                 Finalizar Viagem
               </button>
 

@@ -117,7 +117,7 @@ export class MotoristaHomeComponent implements OnInit {
       if (dados) {
         this.loading = true;
         agendamento.status = dados.status;
-        agendamento.dataFinal = dados.dataFinal;
+        agendamento.dataFim = new Date().toISOString();
         agendamento.quilometragemFinal = dados.quilometragemFinal;
         agendamento.observacaoFim = dados.observacoes;
         this.agendamentoService.atualizar(agendamento).subscribe({

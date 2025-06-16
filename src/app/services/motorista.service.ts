@@ -9,8 +9,18 @@ export interface Motorista {
   cnh: string;
   validadeCnh: string;
   telefone: string;
-  endereco: string;
+  endereco: {
+    cep: string;
+    logradouro: string;
+    numero: string;
+    complemento?: string;
+    bairro: string;
+    cidade: string;
+    estado: string;
+  }
   email: string;
+  senha: string;
+  perfil: string;
 }
 
 @Injectable({
@@ -30,14 +40,19 @@ export class MotoristaService {
   }
 
   criar(motorista: Motorista): Observable<Motorista> {
-    return this.http.post<Motorista>(this.apiUrl, motorista);
+    return this.http.post<Motorista>(`${this.apiUrl}/create`, motorista);
   }
 
   atualizar(motorista: Motorista): Observable<Motorista> {
-    return this.http.put<Motorista>(`${this.apiUrl}/${motorista.id}`, motorista);
+    return this.http.put<Motorista>(`${this.apiUrl}/put/${motorista.id}`, motorista);
   }
 
   excluir(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.patch<void>(`${this.apiUrl}/inativar/${id}`, { ativo: false });
   }
+
+  buscarEnderecoPorCep(cep: string): Observable<any> {
+    return this.http.get(`https://viacep.com.br/ws/${cep}/json/`);
+  }
+
 }

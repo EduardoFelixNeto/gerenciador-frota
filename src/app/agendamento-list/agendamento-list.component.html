@@ -30,7 +30,7 @@
     <!-- Status -->
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-      <td mat-cell *matCellDef="let agendamento"> {{ agendamento.status }} </td>
+      <td mat-cell *matCellDef="let agendamento"> {{ agendamento.status.replace('_', ' ') }} </td>
     </ng-container>
 
     <!-- Ações -->
@@ -48,7 +48,7 @@
           Agendar Viagem
         </button>
 
-        <button *ngIf="agendamento.status === 'EM USO'" mat-stroked-button color="accent" (click)="registrarAbastecimento(agendamento)">
+        <button *ngIf="agendamento.status === 'EM_USO'" mat-stroked-button color="accent" (click)="registrarAbastecimento(agendamento)">
           Registrar Abastecimento
         </button>
 

@@ -54,7 +54,7 @@ export class InicioViagemDialogComponent {
       quilometragemSaida: this.quilometragemSaida,
       observacoes: this.observacoes,
       dataInicio: new Date().toISOString(),
-      status: 'EM USO'
+      status: 'EM_USO'
     });
   }
 }

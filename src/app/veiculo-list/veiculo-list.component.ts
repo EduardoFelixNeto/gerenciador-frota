@@ -32,7 +32,7 @@ import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.
   styleUrls: ['./veiculo-list.component.css']
 })
 export class VeiculoListComponent implements OnInit {
-  displayedColumns: string[] = ['placa', 'modelo', 'tipo', 'status', 'acoes'];
+  displayedColumns: string[] = ['placa', 'modelo', 'tipo', 'quilometragem', 'acoes'];
   dataSource = new MatTableDataSource<Veiculo>();
   filtro: string = '';
 

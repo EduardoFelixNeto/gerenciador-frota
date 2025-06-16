@@ -52,22 +52,22 @@ export class AgendamentoListComponent implements OnInit {
     this.listarAgendamentos();
   }
 
-  listarAgendamentos(): void {
+  listarAgendamentos(filtro: string = ''): void {
     this.agendamentoService.listar().subscribe(data => {
-      this.dataSource = new MatTableDataSource(data);
+      const filteredData = data.filter(agendamento =>
+        (agendamento.motorista?.nome?.toLowerCase() ?? '').includes(filtro.toLowerCase()) ||
+        (agendamento.destino?.toLowerCase() ?? '').includes(filtro.toLowerCase()) ||
+        (agendamento.status?.toLowerCase() ?? '').includes(filtro.toLowerCase()) ||
+        (agendamento.dataInicio?.toLowerCase() ?? '').includes(filtro.toLowerCase())
+      );
+      this.dataSource = new MatTableDataSource(filteredData);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.dataSource.filterPredicate = (data: Agendamento, filter: string) => {
-        return data.motorista.nome.toLowerCase().includes(filter) ||
-          data.destino.toLowerCase().includes(filter) ||
-          data.status.toLowerCase().includes(filter) ||
-          data.dataInicio.toLowerCase().includes(filter);
-      };
     });
   }
 
   aplicarFiltro(): void {
-    this.dataSource.filter = this.filtro.trim().toLowerCase();
+    this.listarAgendamentos(this.filtro.trim());
   }
 
   abrirDialog(agendamento?: Agendamento): void {
@@ -107,11 +107,16 @@ export class AgendamentoListComponent implements OnInit {
 
   agendarViagem(agendamento: Agendamento): void {
     agendamento.status = 'AGENDADO';
-    this.agendamentoService.atualizar(agendamento);
-    this.snackBar.open(`Agendamento para ${agendamento.motorista.nome} foi feito com sucesso.`, 'Fechar', {
-      duration: 3000
+    this.agendamentoService.atualizar(agendamento).subscribe({
+      next: () => {
+        this.snackBar.open(`Agendamento para ${agendamento.motorista.nome} foi feito com sucesso.`, 'Fechar', {
+          duration: 3000
+        });
+      },
+      error: () => {
+        this.snackBar.open('Erro ao iniciar viagem.', 'Fechar', { duration: 3000 });
+      }
     });
-    console.log('Agendar Viagem:', agendamento);
   }
 
   registrarAbastecimento(agendamento: Agendamento): void {

@@ -36,13 +36,14 @@ export class HistoricoViagensComponent implements OnInit {
   carregarHistorico(): void {
     this.loading = true;
     const motoristaId = this.authService.getUsuarioLogado()?.id;
-
+    console.log('Carregando histórico para o motorista:', motoristaId);
     this.agendamentoService.listar().subscribe({
       next: (data) => {
+        console.log('Dados recebidos:', data);
         this.motoristaService.listar().subscribe(motoristas => {
           this.veiculoService.listar().subscribe(veiculos => {
             this.historico = data
-              .filter(a => a.motorista.id === motoristaId?.toString() && ['FINALIZADO'].includes(a.status))
+              .filter(a => a.motorista.id === motoristaId && ['FINALIZADO'].includes(a.status))
               .map(a => ({
                 ...a,
                 motoristaNome: motoristas.find(m => Number(m.id) === a.motorista.id)?.nome,

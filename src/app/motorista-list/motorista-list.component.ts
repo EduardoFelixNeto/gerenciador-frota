@@ -32,7 +32,7 @@ import {ConfirmDialogComponent} from '../shared/confirm-dialog/confirm-dialog.co
   styleUrls: ['./motorista-list.component.css']
 })
 export class MotoristaListComponent implements OnInit {
-  displayedColumns: string[] = ['nome', 'cpf', 'telefone', 'acoes'];
+  displayedColumns: string[] = ['nome', 'cnh', 'telefone', 'acoes'];
   dataSource = new MatTableDataSource<Motorista>();
   filtro: string = '';
 
@@ -51,12 +51,13 @@ export class MotoristaListComponent implements OnInit {
 
   listarMotoristas(): void {
     this.motoristaService.listar().subscribe(data => {
+      data = data.filter(motorista => motorista.perfil === 'MOTORISTA');
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.dataSource.filterPredicate = (data: Motorista, filter: string) => {
         return data.nome.toLowerCase().includes(filter) ||
-          data.cpf.toLowerCase().includes(filter) ||
+          data.cnh.toLowerCase().includes(filter) ||
           data.telefone.toLowerCase().includes(filter);
       };
     });
@@ -67,9 +68,10 @@ export class MotoristaListComponent implements OnInit {
   }
 
   abrirDialog(motorista?: Motorista): void {
+    console.log('motorista', motorista);
     const dialogRef = this.dialog.open(MotoristaDialogComponent, {
-      width: '400px',
-      data: motorista ? {...motorista} : null
+      width: '500px',
+      data: motorista ? {...motorista} : null,
     });
 
     dialogRef.afterClosed().subscribe(result => {

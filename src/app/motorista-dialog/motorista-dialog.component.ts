@@ -38,9 +38,41 @@ export class MotoristaDialogComponent {
       cnh: [data?.cnh || '', Validators.required],
       validadeCnh: [data?.validadeCnh || '', Validators.required],
       telefone: [data?.telefone || '', Validators.required],
-      endereco: [data?.endereco || '', Validators.required],
-      email: [data?.email || '', [Validators.required, Validators.email]]
+      email: [data?.email || '', [Validators.required, Validators.email]],
+      senha: [data?.senha || '', Validators.required],
+      endereco: this.fb.group({
+        cep: [data?.endereco?.cep || '', Validators.required],
+        logradouro: [data?.endereco?.logradouro || '', Validators.required],
+        numero: [data?.endereco?.numero || '', Validators.required],
+        complemento: [data?.endereco?.complemento || ''],
+        bairro: [data?.endereco?.bairro || '', Validators.required],
+        cidade: [data?.endereco?.cidade || '', Validators.required],
+        estado: [data?.endereco?.estado || '', Validators.required]
+      })
     });
+
+  }
+
+  buscarEnderecoPorCep(): void {
+    const cep = this.motoristaForm.get('endereco.cep')?.value;
+    if (cep && cep.length === 8) {
+      this.motoristaService.buscarEnderecoPorCep(cep).subscribe({
+        next: (data) => {
+          this.motoristaForm.patchValue({
+            endereco: {
+              logradouro: data.logradouro,
+              bairro: data.bairro,
+              cidade: data.localidade,
+              estado: data.uf,
+              complemento: data.complemento
+            }
+          });
+        },
+        error: () => {
+          console.error('Erro ao buscar endereço pelo CEP');
+        }
+      });
+    }
   }
 
   salvar(): void {
@@ -63,6 +95,7 @@ export class MotoristaDialogComponent {
         }
       });
     } else {
+      console.log('Criando novo motorista:', motorista);
       this.motoristaService.criar(motorista).subscribe({
         next: () => {
           this.loading = false;

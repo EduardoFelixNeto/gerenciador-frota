@@ -16,13 +16,11 @@ export class AppComponent {
   username: string | null = '';
 
   constructor(private authService: AuthService, private router: Router) {
-    // Pega o nome armazenado (caso o usuário esteja logado)
     this.username = this.authService.getNome();
   }
 
   logout(): void {
     this.authService.logout();
-    // Atualiza o nome do usuário (caso queira esconder a navbar ou limpar info)
     this.username = null;
     this.router.navigate(['/login']);
   }
