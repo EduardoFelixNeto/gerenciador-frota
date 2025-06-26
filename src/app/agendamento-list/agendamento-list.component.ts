@@ -35,7 +35,7 @@ import {ManutencaoDialogComponent} from '../manutencao-dialog/manutencao-dialog.
   styleUrls: ['./agendamento-list.component.css']
 })
 export class AgendamentoListComponent implements OnInit {
-  displayedColumns: string[] = ['motorista', 'destino', 'dataInicio', 'status', 'acoes'];
+  displayedColumns: string[] = ['motorista', 'destino', 'dataInicio', 'statusAgenda', 'acoes'];
   dataSource = new MatTableDataSource<Agendamento>();
   filtro: string = '';
 
@@ -57,7 +57,7 @@ export class AgendamentoListComponent implements OnInit {
       const filteredData = data.filter(agendamento =>
         (agendamento.motorista?.nome?.toLowerCase() ?? '').includes(filtro.toLowerCase()) ||
         (agendamento.destino?.toLowerCase() ?? '').includes(filtro.toLowerCase()) ||
-        (agendamento.status?.toLowerCase() ?? '').includes(filtro.toLowerCase()) ||
+        (agendamento.statusAgenda?.toLowerCase() ?? '').includes(filtro.toLowerCase()) ||
         (agendamento.dataInicio?.toLowerCase() ?? '').includes(filtro.toLowerCase())
       );
       this.dataSource = new MatTableDataSource(filteredData);
@@ -106,7 +106,7 @@ export class AgendamentoListComponent implements OnInit {
   }
 
   agendarViagem(agendamento: Agendamento): void {
-    agendamento.status = 'AGENDADO';
+    agendamento.statusAgenda = 'AGENDADO';
     this.agendamentoService.atualizar(agendamento).subscribe({
       next: () => {
         this.snackBar.open(`Agendamento para ${agendamento.motorista.nome} foi feito com sucesso.`, 'Fechar', {
@@ -121,15 +121,14 @@ export class AgendamentoListComponent implements OnInit {
 
   registrarAbastecimento(agendamento: Agendamento): void {
     const abastecimento = {
-      veiculoPlaca: agendamento.veiculo.placa,
-      dataAbastecimento: new Date().toISOString().slice(0, 10),
-      litros: 0,
-      valorTotal: 0,
-      kmAtual: agendamento.quilometragemInicial ?? agendamento.veiculo.quilometragemAtual
+      veiculo: agendamento.veiculo.placa,
+      data: new Date().toISOString().slice(0, 10),
+      valor: 0,
+      quilometragem: agendamento.quilometragemInicial ?? agendamento.veiculo.quilometragemAtual
     };
 
     const dialogRef = this.dialog.open(AbastecimentoDialogComponent, {
-      width: '400px',
+      width: '450px',
       data: abastecimento
     });
 

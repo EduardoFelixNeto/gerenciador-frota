@@ -28,9 +28,9 @@
     </ng-container>
 
     <!-- Status -->
-    <ng-container matColumnDef="status">
+    <ng-container matColumnDef="statusAgenda">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-      <td mat-cell *matCellDef="let agendamento"> {{ agendamento.status.replace('_', ' ') }} </td>
+      <td mat-cell *matCellDef="let agendamento"> {{ agendamento.statusAgenda ? agendamento.statusAgenda.replace('_', ' ') : agendamento.statusAgenda }} </td>
     </ng-container>
 
     <!-- Ações -->
@@ -44,15 +44,15 @@
           <mat-icon>delete</mat-icon>
         </button>
 
-        <button *ngIf="agendamento.status === 'PENDENTE'" mat-stroked-button color="primary" (click)="agendarViagem(agendamento)">
+        <button *ngIf="agendamento.statusAgenda === 'PENDENTE'" mat-stroked-button color="primary" (click)="agendarViagem(agendamento)">
           Agendar Viagem
         </button>
 
-        <button *ngIf="agendamento.status === 'EM_USO'" mat-stroked-button color="accent" (click)="registrarAbastecimento(agendamento)">
+        <button *ngIf="agendamento.statusAgenda === 'EM_USO'" mat-stroked-button color="accent" (click)="registrarAbastecimento(agendamento)">
           Registrar Abastecimento
         </button>
 
-        <button *ngIf="agendamento.status === 'FINALIZADO'" mat-stroked-button color="warn" (click)="registrarManutencao(agendamento)">
+        <button *ngIf="agendamento.statusAgenda === 'FINALIZADO'" mat-stroked-button color="warn" (click)="registrarManutencao(agendamento)">
           Registrar Manutenção
         </button>
       </td>

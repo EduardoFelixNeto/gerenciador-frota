@@ -36,10 +36,10 @@
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Status</mat-label>
-    <mat-select formControlName="status" required>
-      <mat-option *ngFor="let status of statusOptions" [value]="status">{{ status }}</mat-option>
+    <mat-select formControlName="statusAgenda" required>
+      <mat-option *ngFor="let statusAgenda of statusOptions" [value]="statusAgenda">{{ statusAgenda }}</mat-option>
     </mat-select>
-    <mat-error *ngIf="agendamentoForm.get('status')?.hasError('required')">Status é obrigatório</mat-error>
+    <mat-error *ngIf="agendamentoForm.get('statusAgenda')?.hasError('required')">Status é obrigatório</mat-error>
   </mat-form-field>
 
   <div class="button-actions">

@@ -34,7 +34,7 @@ import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.
   styleUrls: ['./abastecimento-list.component.css']
 })
 export class AbastecimentoListComponent implements OnInit {
-  displayedColumns: string[] = ['veiculoPlaca', 'dataAbastecimento', 'litros', 'valorTotal', 'acoes'];
+  displayedColumns: string[] = ['veiculo', 'data', 'valor', 'acoes'];
   dataSource = new MatTableDataSource<Abastecimento>();
   filtro: string = '';
   loading = false;
@@ -60,7 +60,7 @@ export class AbastecimentoListComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.dataSource.filterPredicate = (data: Abastecimento, filter: string) => {
-          return data.veiculoPlaca.toLowerCase().includes(filter);
+          return data.veiculo.placa.toLowerCase().includes(filter);
         };
         this.loading = false;
       },

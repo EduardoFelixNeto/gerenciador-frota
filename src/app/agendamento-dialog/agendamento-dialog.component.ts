@@ -46,7 +46,7 @@ export class AgendamentoDialogComponent implements OnInit {
       veiculo: [data?.veiculo || '', Validators.required],
       destino: [data?.destino || '', Validators.required],
       dataInicio: [data?.dataInicio || '', Validators.required],
-      status: [data?.status || 'PENDENTE', Validators.required]
+      statusAgenda: [data?.statusAgenda || 'PENDENTE', Validators.required]
     });
 
   }

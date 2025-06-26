@@ -43,7 +43,7 @@ export class HistoricoViagensComponent implements OnInit {
         this.motoristaService.listar().subscribe(motoristas => {
           this.veiculoService.listar().subscribe(veiculos => {
             this.historico = data
-              .filter(a => a.motorista.id === motoristaId && ['FINALIZADO'].includes(a.status))
+              .filter(a => a.motorista.id === motoristaId && ['FINALIZADO'].includes(a.statusAgenda))
               .map(a => ({
                 ...a,
                 motoristaNome: motoristas.find(m => Number(m.id) === a.motorista.id)?.nome,

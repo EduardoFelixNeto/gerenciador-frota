@@ -2,15 +2,15 @@
 
 <mat-dialog-content>
   <p><strong>Destino:</strong> {{ agendamento.destino }}</p>
-  <p><strong>Status:</strong> {{ agendamento.status.replace('_', ' ') }}</p>
+  <p><strong>Status:</strong> {{ agendamento.statusAgenda.replace('_', ' ') }}</p>
   <p><strong>Motorista:</strong> {{ agendamento.motorista.nome }}</p>
   <p><strong>Veículo:</strong> {{ agendamento.veiculo.placa }}</p>
-  <p *ngIf="agendamento.status === 'EM_USO'"><strong>Data de Saída:</strong> {{ agendamento.dataInicio | date:'dd/MM/yyyy HH:mm' }}</p>
-  <p *ngIf="agendamento.status === 'EM_USO'"><strong>Quilometragem Inicial:</strong> {{ agendamento.quilometragemInicial }}</p>
-  <p *ngIf="agendamento.status === 'EM_USO'"><strong>Observações Iniciais:</strong> {{ agendamento.observacaoInicio }}</p>
-  <p *ngIf="agendamento.status === 'FINALIZADO'"><strong>Data de Chegada:</strong> {{ agendamento.dataFim | date:'dd/MM/yyyy HH:mm' }}</p>
-  <p *ngIf="agendamento.status === 'FINALIZADO'"><strong>Quilometragem Final:</strong> {{ agendamento.quilometragemFinal }}</p>
-  <p *ngIf="agendamento.status === 'FINALIZADO'"><strong>Observações Finais:</strong> {{ agendamento.observacaoFim }}</p>
+  <p *ngIf="agendamento.statusAgenda === 'EM_USO'"><strong>Data de Saída:</strong> {{ agendamento.dataInicio | date:'dd/MM/yyyy HH:mm' }}</p>
+  <p *ngIf="agendamento.statusAgenda === 'EM_USO'"><strong>Quilometragem Inicial:</strong> {{ agendamento.quilometragemInicial }}</p>
+  <p *ngIf="agendamento.statusAgenda === 'EM_USO'"><strong>Observações Iniciais:</strong> {{ agendamento.observacaoInicio }}</p>
+  <p *ngIf="agendamento.statusAgenda === 'FINALIZADO'"><strong>Data de Chegada:</strong> {{ agendamento.dataFim | date:'dd/MM/yyyy HH:mm' }}</p>
+  <p *ngIf="agendamento.statusAgenda === 'FINALIZADO'"><strong>Quilometragem Final:</strong> {{ agendamento.quilometragemFinal }}</p>
+  <p *ngIf="agendamento.statusAgenda === 'FINALIZADO'"><strong>Observações Finais:</strong> {{ agendamento.observacaoFim }}</p>
 
 </mat-dialog-content>
 

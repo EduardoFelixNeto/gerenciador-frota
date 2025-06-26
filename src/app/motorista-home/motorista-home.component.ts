@@ -64,8 +64,9 @@ export class MotoristaHomeComponent implements OnInit {
 
     this.agendamentoService.listarPorMotorista().subscribe({
       next: (data) => {
+        console.log('Agendamentos recebidos:', data);
         this.agendamentos = data
-          .filter(a => ['PENDENTE', 'AGENDADO', 'EM_USO'].includes(a.status))
+          .filter(a => ['PENDENTE', 'AGENDADO', 'EM_USO'].includes(a.statusAgenda))
           .sort((a, b) => new Date(a.dataInicio).getTime() - new Date(b.dataInicio).getTime());
         this.loading = false;
       },
@@ -74,6 +75,7 @@ export class MotoristaHomeComponent implements OnInit {
   }
 
   visualizarAgendamento(agendamento: Agendamento): void {
+    console.log(agendamento);
     this.dialog.open(VisualizarAgendamentoDialogComponent, {
       width: '400px',
       data: agendamento
@@ -89,10 +91,10 @@ export class MotoristaHomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dados => {
       if (dados) {
         this.loading = true;
-        agendamento.status = dados.status;
+        agendamento.statusAgenda = dados.statusAgenda;
         agendamento.dataInicio = dados.dataInicio;
-        agendamento.quilometragemInicial = dados.quilometragemSaida;
-        agendamento.observacaoInicio = dados.observacoes;
+        agendamento.quilometragemInicial = dados.quilometragemInicial;
+        agendamento.observacaoInicio = dados.observacaoInicio;
         this.agendamentoService.atualizar(agendamento).subscribe({
           next: () => {
             this.snackBar.open('Viagem iniciada com sucesso!', 'Fechar', { duration: 3000 });
@@ -116,7 +118,7 @@ export class MotoristaHomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dados => {
       if (dados) {
         this.loading = true;
-        agendamento.status = dados.status;
+        agendamento.statusAgenda = dados.statusAgenda;
         agendamento.dataFim = new Date().toISOString();
         agendamento.quilometragemFinal = dados.quilometragemFinal;
         agendamento.observacaoFim = dados.observacoes;

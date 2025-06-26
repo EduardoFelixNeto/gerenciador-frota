@@ -22,17 +22,17 @@ import { MatButtonModule } from '@angular/material/button';
     <mat-dialog-content>
       <mat-form-field appearance="fill" class="w-100">
         <mat-label>Quilometragem de Saída</mat-label>
-        <input matInput type="number" [(ngModel)]="quilometragemSaida" required>
+        <input matInput type="number" [(ngModel)]="quilometragemInicial" required>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="w-100">
         <mat-label>Observações</mat-label>
-        <textarea matInput rows="3" [(ngModel)]="observacoes"></textarea>
+        <textarea matInput rows="3" [(ngModel)]="observacaoInicio"></textarea>
       </mat-form-field>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
       <button mat-button (click)="dialogRef.close()">Cancelar</button>
-      <button mat-raised-button color="primary" (click)="confirmar()" [disabled]="!quilometragemSaida">Confirmar</button>
+      <button mat-raised-button color="primary" (click)="confirmar()" [disabled]="!quilometragemInicial">Confirmar</button>
     </mat-dialog-actions>
   `,
   styles: [`
@@ -41,8 +41,8 @@ import { MatButtonModule } from '@angular/material/button';
   `]
 })
 export class InicioViagemDialogComponent {
-  quilometragemSaida: number = 0;
-  observacoes: string = '';
+  quilometragemInicial: number = 0;
+  observacaoInicio: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<InicioViagemDialogComponent>,
@@ -51,10 +51,10 @@ export class InicioViagemDialogComponent {
 
   confirmar(): void {
     this.dialogRef.close({
-      quilometragemSaida: this.quilometragemSaida,
-      observacoes: this.observacoes,
+      quilometragemInicial: this.quilometragemInicial,
+      observacaoInicio: this.observacaoInicio,
       dataInicio: new Date().toISOString(),
-      status: 'EM_USO'
+      statusAgenda: 'EM_USO'
     });
   }
 }

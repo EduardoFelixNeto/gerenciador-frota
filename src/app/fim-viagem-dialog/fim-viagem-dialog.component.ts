@@ -54,7 +54,7 @@ export class FimViagemDialogComponent {
       quilometragemFinal: this.quilometragemFinal,
       observacoes: this.observacoes,
       dataFinal: new Date().toISOString(),
-      status: 'FINALIZADO'
+      statusAgenda: 'FINALIZADO'
     });
   }
 }

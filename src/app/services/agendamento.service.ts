@@ -13,7 +13,7 @@ export interface Agendamento {
   dataInicio: string;
   dataFim: string;
   dataRetorno: string;
-  status: string;
+  statusAgenda: string;
   veiculo: Veiculo;
   quilometragemInicial?: number;
   observacaoInicio?: string;

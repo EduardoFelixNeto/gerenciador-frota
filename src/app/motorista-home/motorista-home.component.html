@@ -21,16 +21,16 @@
               Veículo: {{ agendamento.veiculo.placa }}
             </mat-card-subtitle>
             <mat-card-content>
-              <p><strong>Status:</strong> {{ agendamento.status.replace('_', ' ') }}</p>
+              <p><strong>Status:</strong> {{ agendamento.statusAgenda.replace('_', ' ') }}</p>
             </mat-card-content>
             <mat-card-actions>
               <button mat-raised-button color="primary" (click)="visualizarAgendamento(agendamento)">Visualizar</button>
 
-              <button *ngIf="agendamento.status === 'AGENDADO'" mat-raised-button color="accent" (click)="iniciarViagem(agendamento)">
+              <button *ngIf="agendamento.statusAgenda === 'AGENDADO'" mat-raised-button color="accent" (click)="iniciarViagem(agendamento)">
                 Iniciar Viagem
               </button>
 
-              <button *ngIf="agendamento.status === 'EM_USO'" mat-raised-button color="warn" (click)="finalizarViagem(agendamento)">
+              <button *ngIf="agendamento.statusAgenda === 'EM_USO'" mat-raised-button color="warn" (click)="finalizarViagem(agendamento)">
                 Finalizar Viagem
               </button>
 

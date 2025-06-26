@@ -2,36 +2,53 @@
 
 <form [formGroup]="abastecimentoForm" (ngSubmit)="salvar()">
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Placa do Veículo</mat-label>
-    <input matInput formControlName="veiculoPlaca" required>
-    <mat-error *ngIf="abastecimentoForm.get('veiculoPlaca')?.hasError('required')">Placa é obrigatória</mat-error>
+    <mat-label>Veículo</mat-label>
+    <mat-select formControlName="veiculo" required>
+      <mat-option *ngFor="let veiculo of veiculos" [value]="veiculo">
+        {{ veiculo.placa }} - {{ veiculo.modelo }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="abastecimentoForm.get('veiculo')?.hasError('required')">Veículo é obrigatório</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Motorista</mat-label>
+    <mat-select formControlName="motorista" required>
+      <mat-option *ngFor="let motorista of motoristas" [value]="motorista">
+        {{ motorista.nome }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="abastecimentoForm.get('motorista')?.hasError('required')">Motorista é obrigatório</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Tipo de Combustível</mat-label>
+    <mat-select formControlName="tipoCombustivel" required>
+      <mat-option *ngFor="let tipoCombustivel of tipoCombustiveOptions" [value]="tipoCombustivel">
+        {{ tipoCombustivel }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="abastecimentoForm.get('motorista')?.hasError('required')">Motorista é obrigatório</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Data do Abastecimento</mat-label>
-    <input matInput type="date" formControlName="dataAbastecimento" required>
-    <mat-error *ngIf="abastecimentoForm.get('dataAbastecimento')?.hasError('required')">Data é obrigatória</mat-error>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Litros</mat-label>
-    <input matInput type="number" formControlName="litros" required>
-    <mat-error *ngIf="abastecimentoForm.get('litros')?.hasError('required')">Quantidade é obrigatória</mat-error>
-    <mat-error *ngIf="abastecimentoForm.get('litros')?.hasError('min')">Valor inválido</mat-error>
+    <input matInput type="date" formControlName="data" required>
+    <mat-error *ngIf="abastecimentoForm.get('data')?.hasError('required')">Data é obrigatória</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Valor Total</mat-label>
-    <input matInput type="number" formControlName="valorTotal" required>
-    <mat-error *ngIf="abastecimentoForm.get('valorTotal')?.hasError('required')">Valor é obrigatório</mat-error>
-    <mat-error *ngIf="abastecimentoForm.get('valorTotal')?.hasError('min')">Valor inválido</mat-error>
+    <input matInput type="number" formControlName="valor" required>
+    <mat-error *ngIf="abastecimentoForm.get('valor')?.hasError('required')">Valor é obrigatório</mat-error>
+    <mat-error *ngIf="abastecimentoForm.get('valor')?.hasError('min')">Valor inválido</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>KM Atual</mat-label>
-    <input matInput type="number" formControlName="kmAtual" required>
-    <mat-error *ngIf="abastecimentoForm.get('kmAtual')?.hasError('required')">KM Atual é obrigatório</mat-error>
-    <mat-error *ngIf="abastecimentoForm.get('kmAtual')?.hasError('min')">Valor inválido</mat-error>
+    <input matInput type="number" formControlName="quilometragem" required>
+    <mat-error *ngIf="abastecimentoForm.get('quilometragem')?.hasError('required')">KM Atual é obrigatório</mat-error>
+    <mat-error *ngIf="abastecimentoForm.get('quilometragem')?.hasError('min')">Valor inválido</mat-error>
   </mat-form-field>
 
   <div class="button-actions">

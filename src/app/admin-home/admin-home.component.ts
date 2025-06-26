@@ -59,7 +59,7 @@ import {VeiculoListComponent} from '../veiculo-list/veiculo-list.component';
 export class AdminHomeComponent implements OnInit {
   abaSelecionada = 0; // 0 = Agendamentos | 1 = Abastecimentos | 2 = Manutenções
 
-  displayedColumns: string[] = ['motorista', 'destino', 'dataInicio', 'status', 'acoes'];
+  displayedColumns: string[] = ['motorista', 'destino', 'dataInicio', 'statusAgenda', 'acoes'];
   dataSource = new MatTableDataSource<Agendamento>();
   filtroForm: FormGroup;
   loading = false;
@@ -75,7 +75,7 @@ export class AdminHomeComponent implements OnInit {
   ) {
     this.filtroForm = this.fb.group({
       motorista: [''],
-      status: [''],
+      statusAgenda: [''],
       periodo: ['']
     });
   }
@@ -101,15 +101,15 @@ export class AdminHomeComponent implements OnInit {
   }
 
   aplicarFiltro(): void {
-    const { motorista, status, periodo } = this.filtroForm.value;
+    const { motorista, statusAgenda, periodo } = this.filtroForm.value;
     let filtros = this.dataSource.data;
 
     if (motorista) {
       filtros = filtros.filter(a => a.motorista.id);
     }
 
-    if (status) {
-      filtros = filtros.filter(a => a.status === status);
+    if (statusAgenda) {
+      filtros = filtros.filter(a => a.statusAgenda === statusAgenda);
     }
 
     if (periodo) {
