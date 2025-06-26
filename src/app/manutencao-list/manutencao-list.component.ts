@@ -60,7 +60,7 @@ export class ManutencaoListComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.dataSource.filterPredicate = (data: Manutencao, filter: string) => {
-          return data.veiculoPlaca.toLowerCase().includes(filter) ||
+          return data.veiculo.placa.toLowerCase().includes(filter) ||
             data.descricao.toLowerCase().includes(filter);
         };
         this.loading = false;

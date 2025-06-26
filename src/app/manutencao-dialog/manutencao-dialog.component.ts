@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ManutencaoService, Manutencao } from '../services/manutencao.service';
+import {MatSelectModule} from '@angular/material/select';
+import {Veiculo, VeiculoService} from '../services/veiculo.service';
 
 @Component({
   selector: 'app-manutencao-dialog',
@@ -17,26 +19,49 @@ import { ManutencaoService, Manutencao } from '../services/manutencao.service';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSelectModule
   ],
   templateUrl: './manutencao-dialog.component.html'
 })
-export class ManutencaoDialogComponent {
+export class ManutencaoDialogComponent implements OnInit {
   manutencaoForm: FormGroup;
   loading = false;
+  veiculos: Veiculo[] = [];
 
   constructor(
     private fb: FormBuilder,
     private manutencaoService: ManutencaoService,
     private dialogRef: MatDialogRef<ManutencaoDialogComponent>,
+    private veiculoService: VeiculoService,
     @Inject(MAT_DIALOG_DATA) public data: Manutencao | null
   ) {
     this.manutencaoForm = this.fb.group({
       id: [data?.id],
-      veiculoPlaca: [data?.veiculoPlaca || '', Validators.required],
-      dataManutencao: [data?.dataManutencao || '', Validators.required],
+      veiculo: [data?.veiculo || '', Validators.required],
+      data: [data?.data || '', Validators.required],
       descricao: [data?.descricao || '', [Validators.required, Validators.minLength(5)]],
-      valor: [data?.valor || '', [Validators.required, Validators.min(0.01)]]
+      valor: [data?.valor || '', [Validators.required, Validators.min(0.01)]],
+      tipo: [data?.tipo || '', Validators.required],
+      quilometragem: [data?.quilometragem || '', [Validators.required, Validators.min(0)]]
+    });
+  }
+
+  ngOnInit(): void {
+    this.veiculoService.listar().subscribe({
+      next: veiculos => {
+        this.veiculos = veiculos;
+
+        if (this.data?.veiculo?.id) {
+          const veiculoSelecionado = this.veiculos.find(v => v.id === this.data!.veiculo.id);
+          if (veiculoSelecionado) {
+            this.manutencaoForm.patchValue({ veiculo: veiculoSelecionado });
+          }
+        }
+      },
+      error: () => {
+        // Tratar erro ao listar veículos
+      }
     });
   }
 
